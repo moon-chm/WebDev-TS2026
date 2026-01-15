@@ -3,7 +3,6 @@ import { AppleLiquidGlassNav } from './components/AppleNav'
 import { BlurFade } from "./components/ui/blur-fade"
 import { Skiper17 } from "./components/cardscroll"
 import SplineScene from "./components/SplineScene"
-import { SpeedInsights } from "@vercel/speed-insights/next"
 
 function App() {
   return (
@@ -29,9 +28,6 @@ function App() {
       <div className="h-screen relative">
         <SplineScene />
       </div>
-
-      {/* Vercel Speed Insights */}
-      <SpeedInsights />
     </div>
   )
 }
