@@ -8,6 +8,13 @@
   body {
     font-family: 'Inter', system-ui, sans-serif;
     font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+    background-color: #000000;
+    margin: 0;
+    padding: 0;
+  }
+  
+  html, #root {
+    background-color: #000000;
   }
 }
 

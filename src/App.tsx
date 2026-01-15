@@ -1,12 +1,12 @@
 import SyntheticHero from './components/SyntheticHero'
 import { AppleLiquidGlassNav } from './components/AppleNav'
 import { BlurFade } from "./components/ui/blur-fade"
-import { ProgressiveBlur } from "./components/progressiveblur"
 import { Skiper17 } from "./components/cardscroll"
 import SplineScene from "./components/SplineScene"
 
 function App() {
   return (
+<<<<<<< HEAD
     <div className="min-h-screen bg-black relative">
       <AppleLiquidGlassNav />
 
@@ -31,9 +31,23 @@ function App() {
       {/* Sticky Card Scroll Section */}
       <div className="h-screen relative bg-black">
         <Skiper17 />
+=======
+    <div className="min-h-screen bg-black relative overflow-hidden">
+      <AppleLiquidGlassNav />
+      
+      {/* Hero Section */}
+      <div className="relative">
+        <BlurFade>    
+          <SyntheticHero 
+            title="WHERE TOP ENGINERS RISE"
+            description="A national-level technical event by DKTE."
+          />
+        </BlurFade>
+>>>>>>> 3264654a4b310872b0626446ca5d725d784cf767
       </div>
 
       
+<<<<<<< HEAD
 
       <ProgressiveBlur
         position="bottom"
@@ -42,6 +56,12 @@ function App() {
         blurAmount="8px"
         className="z-10"
       />
+=======
+      {/* Sticky Card Scroll Section - Increased height for scrolling */}
+      <div className="relative mt-40 py-20">
+        <Skiper17/>
+      </div>
+>>>>>>> 3264654a4b310872b0626446ca5d725d784cf767
     </div>
   )
 }
