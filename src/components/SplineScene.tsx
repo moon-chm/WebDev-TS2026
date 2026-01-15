@@ -3,18 +3,19 @@ import { lazy, Suspense } from "react"
 const Spline = lazy(() => import("@splinetool/react-spline"))
 
 export default function SplineScene() {
+  const isMobile = window.innerWidth < 768
+
   return (
-    <div className="w-full h-screen">
-      <Suspense fallback={
-        <div className="w-full h-full flex items-center justify-center bg-gray-900">
-          <div className="text-white text-xl">Loading...</div>
-        </div>
-      }>
-        <Spline 
-          scene="https://prod.spline.design/Br2ec4uzQFipXomJ/scene.splinecode"
-          className="w-full h-full"
-        />
-      </Suspense>
+    <div className="h-[300px] md:h-[600px]">
+      {!isMobile && (
+        <Suspense
+          fallback={
+            <div className="w-full h-full bg-black/20 animate-pulse rounded-xl" />
+          }
+        >
+          <Spline scene="https://prod.spline.design/cZ2GGUq2CYKw0X8m/scene.splinecode" />
+        </Suspense>
+      )}
     </div>
   )
 }
