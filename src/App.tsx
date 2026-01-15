@@ -3,7 +3,6 @@ import { AppleLiquidGlassNav } from './components/AppleNav'
 import { BlurFade } from "./components/ui/blur-fade"
 import { Skiper17 } from "./components/cardscroll"
 import SplineScene from "./components/SplineScene"
-import { SpeedInsights } from "@vercel/speed-insights/next"
 function App() {
   return (
     <div className="min-h-screen bg-black relative overflow-hidden">
