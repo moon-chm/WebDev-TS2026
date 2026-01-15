@@ -308,4 +308,5 @@ const Skiper17 = () => {
   );
 };
 
-export { Skiper17, StickyCard002 };
+export default Skiper17;
+export { StickyCard002 };
