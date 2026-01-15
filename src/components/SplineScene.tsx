@@ -12,8 +12,7 @@ export default function SplineScene() {
       }>
         <Spline 
           scene="https://prod.spline.design/Br2ec4uzQFipXomJ/scene.splinecode"
-          className="w-full h-full touch-none"
-          style={{ touchAction: 'none' }}
+          className="w-full h-full"
         />
       </Suspense>
     </div>
