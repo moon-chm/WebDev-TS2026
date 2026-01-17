@@ -18,7 +18,7 @@ function SplineLoader() {
 
 // Wrapper to handle load state
 function SplineWrapper() {
-  const [isLoaded, setIsLoaded] = useState(false)
+  const [, setIsLoaded] = useState(false)
   const [isInView, setIsInView] = useState(false)
   const splineRef = useRef<HTMLDivElement>(null)
 
