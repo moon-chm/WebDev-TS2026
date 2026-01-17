@@ -15,6 +15,7 @@
     "@react-three/drei": "^9.88.17",
     "@react-three/fiber": "^8.15.12",
     "@splinetool/react-spline": "^4.1.0",
+    "@studio-freight/lenis": "^1.0.42",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.0.0",
     "framer-motion": "^12.26.2",

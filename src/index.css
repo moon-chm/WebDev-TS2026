@@ -156,3 +156,22 @@
     transform: translateY(-1px);
   }
 }
+.spline-container {
+  transform: translateZ(0);
+  will-change: transform;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  perspective: 1000px;
+  -webkit-perspective: 1000px;
+}
+
+.spline-container canvas {
+  transform: translate3d(0, 0, 0);
+  will-change: transform;
+}
+
+/* Reduce quality during scroll */
+.scroll-container.is-scrolling .spline-container canvas {
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: crisp-edges;
+}

@@ -1,49 +1,99 @@
-import { lazy, Suspense, useEffect, useRef, useState } from "react"
+import Spline from '@splinetool/react-spline'
+import { useRef, useEffect, useState } from 'react'
 
-// Lazy import Spline
-const Spline = lazy(() => import("@splinetool/react-spline"))
+interface SplineSceneProps {
+  onLoad?: () => void
+}
 
-export default function SplineScene() {
+export default function SplineScene({ onLoad }: SplineSceneProps) {
+  const splineRef = useRef<any>(null)
   const containerRef = useRef<HTMLDivElement>(null)
-  const [loadSpline, setLoadSpline] = useState(false)
+  const [isVisible, setIsVisible] = useState(true)
 
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setLoadSpline(true)
-          observer.disconnect()
+  function onSplineLoad(spline: any) {
+    splineRef.current = spline
+    
+    // Performance optimizations
+    if (spline && spline._scene) {
+      const scene = spline._scene
+      const renderer = spline._renderer
+      
+      // Lower quality on mobile/slower devices
+      const isMobile = window.innerWidth < 768
+      const isSlowDevice = navigator.hardwareConcurrency <= 4
+      
+      if (renderer) {
+        // Reduce pixel ratio for better performance
+        renderer.setPixelRatio(isMobile || isSlowDevice ? 1 : Math.min(window.devicePixelRatio, 2))
+        
+        // Disable antialiasing on low-end devices
+        if (isSlowDevice) {
+          renderer.antialias = false
         }
-      },
-      {
-        threshold: 0.25, // load when 25% visible
       }
-    )
+      
+      // Throttle rendering when not visible
+      const observer = new IntersectionObserver(
+        ([entry]) => {
+          setIsVisible(entry.isIntersecting)
+          
+          if (spline.setZoom) {
+            // Reduce quality when scrolled away
+            if (!entry.isIntersecting && spline.pause) {
+              spline.pause()
+            } else if (entry.isIntersecting && spline.play) {
+              spline.play()
+            }
+          }
+        },
+        { threshold: 0.1 }
+      )
+      
+      if (containerRef.current) {
+        observer.observe(containerRef.current)
+      }
+    }
+    
+    onLoad?.()
+  }
 
-    if (containerRef.current) observer.observe(containerRef.current)
-
-    return () => observer.disconnect()
+  // Throttle mouse interactions
+  useEffect(() => {
+    let mouseMoveTimeout: NodeJS.Timeout
+    
+    const handleMouseMove = () => {
+      clearTimeout(mouseMoveTimeout)
+      mouseMoveTimeout = setTimeout(() => {
+        // Mouse stopped moving - can reduce update frequency
+      }, 100)
+    }
+    
+    window.addEventListener('mousemove', handleMouseMove, { passive: true })
+    
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove)
+      clearTimeout(mouseMoveTimeout)
+    }
   }, [])
 
   return (
-    <div
+    <div 
       ref={containerRef}
-      className="w-full h-screen flex items-center justify-center bg-black"
+      className="spline-container w-full h-full"
+      style={{
+        opacity: isVisible ? 1 : 0.5,
+        pointerEvents: isVisible ? 'auto' : 'none'
+      }}
     >
-      {loadSpline && (
-        <Suspense fallback={<SplineLoader />}>
-          <Spline scene="https://prod.spline.design/cZ2GGUq2CYKw0X8m/scene.splinecode" />
-        </Suspense>
-      )}
-    </div>
-  )
-}
-
-// Lightweight loader
-function SplineLoader() {
-  return (
-    <div className="text-white opacity-60 text-sm">
-      Loading 3D experience…
+      <Spline
+        scene="https://prod.spline.design/cZ2GGUq2CYKw0X8m/scene.splinecode"
+        onLoad={onSplineLoad}
+        style={{
+          width: '100%',
+          height: '100%',
+          background: 'transparent'
+        }}
+      />
     </div>
   )
 }
