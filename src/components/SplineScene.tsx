@@ -68,24 +68,27 @@ export default function SplineScene({ onLoad }: SplineSceneProps) {
     }
   }, [])
 
-  return (
-    <div
-      ref={containerRef}
-      className="spline-container w-full h-full"
+ return (
+  <div
+    ref={containerRef}
+    className="relative w-full min-h-[100dvh] overflow-hidden"
+    style={{
+      opacity: isVisible ? 1 : 0.5,
+      pointerEvents: isVisible ? 'auto' : 'none',
+    }}
+  >
+    <Spline
+      scene="https://prod.spline.design/cZ2GGUq2CYKw0X8m/scene.splinecode"
+      onLoad={onSplineLoad}
       style={{
-        opacity: isVisible ? 1 : 0.5,
-        pointerEvents: isVisible ? 'auto' : 'none'
+        position: 'absolute',
+        inset: 0,
+        width: '100%',
+        height: '100%',
+        background: 'transparent',
       }}
-    >
-      <Spline
-        scene="https://prod.spline.design/cZ2GGUq2CYKw0X8m/scene.splinecode"
-        onLoad={onSplineLoad}
-        style={{
-          width: '100%',
-          height: '100%',
-          background: 'transparent'
-        }}
-      />
-    </div>
-  )
+    />
+  </div>
+)
+
 }
